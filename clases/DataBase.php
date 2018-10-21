@@ -15,12 +15,10 @@ abstract class DataBase
     
     abstract public function guardarUsuario($usuario);
     
-    //busca si el usuario existe y si es asi, devuelve true. Esta funcion es usada en el login para verificar si el email introducido existe 
-    abstract public function searchUser($email);
     //Verifica contraseña en el archivo json. Esta funcion es usada en el login para verificar si el password introducido coincide con el guardado en el registro 
     abstract public function searchPassword($password, $email);
 
-    abstract public function modificarJson($email,$recover);
+    abstract public function modificarBD($email);
 
     public function guardarFoto($fotoPerfil)
     {
@@ -48,6 +46,7 @@ abstract class DataBase
 
     return $nombreFinal;
     }
+    
 public function validarFoto ($foto)
     {
         if ($foto["error"] !== UPLOAD_ERR_OK) {
@@ -56,7 +55,7 @@ public function validarFoto ($foto)
         return true;
     }
 
-public function validarfotoPerfil($usuario)
+public function validarFotoPerfil($usuario)
     {
         $filesErrores = [];
 

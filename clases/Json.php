@@ -7,145 +7,164 @@ class Json extends DataBase
     public function __construct($archivo){
         $this->archivo=$archivo;
     }
-    //+ la funcion traer usuario recibe un parametro email que en realidad va a ser la variable 
-    //+ $_POST['email]. Al recibir el email, primero declara al usuario como null( osea no existe).
-    //+ luego, hace un fopen del archivo 'usuarios.txt' y lo recorre linea por linea decodificando
+    //+ la funcion traer usuario recibe un parametro email que en realidad va a ser la 
     //+ cada usuario. Si el email recibido por post concuerda con un email del archivo json quiere decir
-    //+ que el usuario ya existía entonces deja de ser null. Cierra el archivo y retorna $usuario.
+    //+ que el usuario ya existía entonces deja de ser null y retorna el email
     public function traerUsuario($email){
-        $usuario=null;
-        
-        $recurso = fopen($this->archivo, 'r');
-        
-        
-        while (($linea = fgets($recurso))!==false) {
-            $usuarioActual=json_decode($linea, true);
+        $usuarios = $this->traerUsuarios();
+
+        foreach ($usuarios->usuarios as $usuario) {
+            $emailJson = $usuario->email;
             
-            if ($usuarioActual['email'] === $email) {
-                $usuario=$usuarioActual;
-                break;
-            }
-        } 
-        fclose($recurso);
-        if ($usuario !== null) {
-            return new Usuario($usuario['nombre'], $usuario['apellido'], $usuario['email'], $usuario['password']);
+
+            if ( $emailJson == $email) {
+                
+                // return new Usuario($usuario['nombre'], $usuario['apellido'], $usuario['email'], $usuario['password'], $usuario['fotoPerfil']);    
+                return $email;
+            } 
         }
-        return $usuario;
+        return NULL;
+    
+    }
+
+    //devuelve un objeto Usuario con los datos guarddos
+    public function usuarioLogin($email){
+        $usuarios = $this->traerUsuarios();
+
+        foreach ($usuarios->usuarios as $usuario) {
+            $emailJson = $usuario->email;
+            
+
+            if ( $emailJson == $email) {
+                
+                return new Usuario($usuario->nombre, $usuario->apellido, $usuario->email, $usuario->password, $usuario->fotoPerfil);    
+            } 
+        }
+    
     }
     
     //+ la funcion guardarUsuario recibe como parametro un usuario, hace un json_encode de este y luego
     //+ lo guarda en el archivo usuarios.json.
-    
+
     public function guardarUsuario($usuario){
 
-        // var_dump($usuario);
-        // exit;
+      
         $user = [
             "nombre" => $usuario->getNombre(),
             "apellido" => $usuario->getApellido(),
             "email" => $usuario->getEmail(),
-            "password" => $usuario->getContrasenia()
+            "password" => $usuario->getContrasenia(),
+            "fotoPerfil" => $usuario->getFotoPerfil()
         ];
-        $jsonUsuarioNuevo=json_encode($user);
-        file_put_contents($this->archivo, $jsonUsuarioNuevo . PHP_EOL, FILE_APPEND);
+
+        $usuarios = $this->traerUsuarios(); 
+        $usuarios->usuarios[]=$user;
+        // var_dump($usuarios);
+        // exit;
+        // $usuarios = $this->traerUsuarios();
+        // $usuarios['usuarios'][]=$user;
+        $json = json_encode($usuarios);
+        file_put_contents($this->archivo, $json);
     }
     
-    //busca si el usuario existe y si es asi, devuelve true. Esta funcion es usada en el login para verificar si el email introducido existe 
-    public function searchUser($email){
+    //retorna todos los usuarios en el json
+    public function traerUsuarios()
+    {
+        // $arrayUsuarios = [];
         
-        $emailDecod = [];
+        // Leemos el archivo 
+        $archivo = file_get_contents($this->archivo);
+        $arrayUsuarios = json_decode($archivo); //devuelve un string de json
         
-        if (isset($archivo)) {
-            $archivo = fopen($this->archivo, 'r');  //abre en modo lectura
-        } else {
-            $archivo = fopen($this->archivo, 'r');
-        }    
-        
-        while (($linea = fgets($archivo)) !== false) {
-            $emailDecod = json_decode($linea, true);     
-            
-            if ($emailDecod['email'] === $email) {  
-                return $email;
-                break;
-            } 
-            
-            
+        return $arrayUsuarios;
+    }
+
+   
+    //devuelve la imagen guardada en el json
+    public function searchImg($email){
+
+
+        $usuarios = $this->traerUsuarios();
+
+        foreach ($usuarios->usuarios  as $usuario) {
+            $emailJson = $usuario->email;
+            if ($emailJson == $email) {
+                return $usuario->fotoPerfil;
+                         break;
+            }
         }
-        fclose($archivo);
-        
-        
-        
     }
     //Verifica contraseña en el archivo json. Esta funcion es usada en el login para verificar si el password introducido coincide con el guardado en el registro 
     public function searchPassword($password, $email){
-        
-        $passwordDecod = [];
-        
-        if (isset($archivo)) {
-            $archivo = fopen($this->archivo, 'r');
-        } else {
-            $archivo = fopen($this->archivo, 'r');
-        }  
-        
-        while (($linea = fgets($archivo)) !== false) {
-            $passwordDecod = json_decode($linea, true);
-            if ($passwordDecod['email']===$email) {
-                
-                if (password_verify($password, $passwordDecod['password'])) {  //devuelve true si la verificacion lo es
+
+        $usuarios = $this->traerUsuarios();
+
+        foreach ($usuarios->usuarios as $usuario) {
+            $emailJson = $usuario->email;
+            
+
+            if ( $emailJson == $email) {
+                if (password_verify($password, $usuario->password)) {  //devuelve true si la verificacion lo es
                     return true;
                     break;
-                }  
-            }               
-            
+                } else {
+                    return false;
+                    break;
+                }
+            } 
         }
-        fclose($archivo);
-        
-        return false;
+
         
     }
     
                       
-            public function modificarJson($email,$recover){  
-                $recurso=fopen($this->archivo, 'r');
+            public function modificarBD($email){  
+                $usuarios = $this->traerUsuarios();
                 
-                $usuarios=file_get_contents($this->archivo);
-                $usuarios = explode(PHP_EOL, $usuarios);
-                array_pop($usuarios);
-                
-                foreach ($usuarios as $llave => $valor) {
-                    $usuarioJson=json_decode($valor, true);
-                    if ($usuarioJson['email']===$email) {
+                foreach ($usuarios->usuarios as $usuario) {
+                    $emailJson = $usuario->email;
+                    if ($emailJson == $email) {
+                        foreach ($_POST as $key => $value) {
+                            if ($key == 'password' && $value != "") {
+                                $usuario->password = password_hash($value, PASSWORD_DEFAULT);
+                            } elseif ($key != 'submit') {
+                                $usuario->$key = $value;
+                            }
+                        }
                         
-                        $nuevoPassword = $recover;
-                        $usuarioJson["password"] = $nuevoPassword;
-                        $usuarios[$llave] = json_encode($usuarioJson);
-                        $_SESSION["usuario"]["password"] = $nuevoPassword;
+                        break;
                     }
                 }
-                file_put_contents($this->archivo, implode(PHP_EOL, $usuarios) . PHP_EOL);
+            
+                $json = json_encode($usuarios);
+                
+                // var_dump($json);
+                // exit;
+                
+                file_put_contents($this->archivo, $json);
+                return new Usuario($usuario->nombre, $usuario->apellido, $usuario->email, $usuario->password);
                 
                 
             }
 
             public function modificarFotoUsuario($email){
-                $recurso=fopen($this->archivo, 'r');
-            
-                $usuarios=file_get_contents($this->archivo);
-                $usuarios = explode(PHP_EOL, $usuarios);
-                array_pop($usuarios);
-            
-                foreach ($usuarios as $llave => $valor) {
-                    $usuarioJson=json_decode($valor, true);
-                    //var_dump($usuarioJson['email']);
-                    if ($usuarioJson["email"]===$email) {
-                        $nuevaFoto = 'img/' . $this->guardarFoto($_FILES["subirFotoPerfil"]);
-                        $usuarioJson["fotoperfil"] = $nuevaFoto;
-                        $usuarios[$llave] = json_encode($usuarioJson);
-                        // $_SESSION["usuario"]["fotoperfil"] = $nuevaFoto;
+
+                $usuarios = $this->traerUsuarios();
+                
+                foreach ($usuarios->usuarios as $usuario) {
+                    $emailJson = $usuario->email;
+                    if ($emailJson == $email) {
+                        $nuevaFoto = "img/".$this->guardarFoto($_FILES["subirFotoPerfil"]);
+                                $usuario->fotoPerfil= $nuevaFoto;
+                                // user()->setFotoPerfil($db->guardarFoto($_FILES['subirFotoPerfil']));
+                                // $this->setFotoPerfil($nuevaFoto);
                     }
                 }
-
-                file_put_contents($this->archivo, implode(PHP_EOL, $usuarios) . PHP_EOL);
+                $json = json_encode($usuarios);
+                // var_dump($json);
+                // exit;
+                file_put_contents($this->archivo, $json);
+                
                 
             }
         }

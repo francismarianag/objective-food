@@ -17,12 +17,18 @@ if ($session->status()) {
         //+ Si no se encuentra un mail igual, el usuario no existe ($usuarioViejo===null).
         //+ Si no existe, creo un usuario nuevo con los datos que recibo por POST, la variable
         //+ $usuarioNuevo va a guardar el array asociativo proveniente de la funcion crearUsuario.
+        // $usuarios = $db->traerUsuarios();
+        // $archivo = file_get_contents($db->archivo);
+        // $arrayUsuarios = json_decode($archivo);
+        // var_dump($usuarios);
+        // exit;
     
-        $errores=Validation::validarErrores();
-        $usuarioViejo=$db->traerUsuario($_POST['email']);
+         $errores=Validation::validarErrores();
+         $usuarioViejo=$db->traerUsuario($_POST['email']);
 
-        if ($usuarioViejo===null) {
-                
+        if ($usuarioViejo==null) { 
+                echo "es null";
+                exit;
         //+ Una vez creado el usuario nuevo, verifico si no hay errores y si checkeo el terminos y condiciones.
                 if (count($errores)===0 && isset($_POST['tyc'])) {
                 $usuarioNuevo = new Usuario($_POST['nombre'], $_POST['apellido'], $_POST['email'], $_POST['password']);
@@ -31,17 +37,20 @@ if ($session->status()) {
         //+ si no existen errores, hasheo la contraseña y la guardo.
                          $hashedPassword=password_hash($_POST['password'], PASSWORD_DEFAULT);
                          $usuarioNuevo->setContrasenia($hashedPassword);
+                         $usuarioNuevo->setFotoPerfil('img/profile.svg');
         //+ se procede a guardar los datos del usuario en el archivo JSON para luego crear una                  
         //+ sesion con su usuario y redirigirlo a la página del usuario.
         // var_dump($usuarioNuevo);
         //  exit;
         $db->guardarUsuario($usuarioNuevo);
+        
                         $_SESSION['usuario']=$usuarioNuevo;
                         redirect();
                 }
         }else {
                 //+ si el usuario existe, se crea un error.
                 $errores['usuarioExiste']='Este email ya pertenece a una cuenta registrada!';
+                
         }
     }
 
@@ -81,11 +90,11 @@ if ($session->status()) {
                                  <!--En esta parte hay php embebido, si existe el error del input, aparece un span conteniendo el error respectivo.  -->
                                         <?php if (isset($errores['emptyEmail'])):?>
                                                 <span class="error-container"><i class="fas fa-exclamation-circle"></i><?php echo $errores['emptyEmail']; ?></span>
-                                                <?php endif ?>
-                                                <?php if (isset($errores['invalidEmail'])):?>
+                                                
+                                                <?php elseif (isset($errores['invalidEmail'])):?>
                                                 <span class="error-container"><i class="fas fa-exclamation-circle"></i><?php echo $errores['invalidEmail']; ?></span>
-                                                <?php endif ?>
-                                                <?php if (isset($errores['usuarioExiste'])):?>
+                                                
+                                                <?php elseif (isset($errores['usuarioExiste'])):?>
                                                 <span class="error-container"><i class="fas fa-exclamation-circle"></i><?php echo $errores['usuarioExiste']; ?></span>
                                                 <?php endif ?>
                                 </div>

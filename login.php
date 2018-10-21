@@ -14,20 +14,22 @@ if ($session->status()) {
     exit();
 }
 if ($_POST) {
-
-  $buscaEmail =  $db->searchUser($_POST['email']);
+          
+          
+            
+  $buscaEmail =  $db->traerUsuario($_POST['email']);
   $buscaPassword = $db->searchPassword($_POST['password'], $buscaEmail);
   $errores = Validation::validationLogin($buscaEmail,$buscaPassword);
   //se envian los datos recibidos por POST a la funcion encargada de validar los datos
   
 
+
 // si no hay errores, se guarda el usuario en un array
   if (!$errores) 
   {
 
-      $usuarioLogin = $db->traerUsuario($_POST['email']);
+      $usuarioLogin = $db->usuarioLogin($_POST['email']);      
 
-            
       //funcion que se encarga de iniciar sesion y de mantenerla abierta si el usuario tildo la opcion de recordar, para ello, se le pasa el array que devuelve la funcion loginUser
       $session->rememberSession($usuarioLogin);
       
