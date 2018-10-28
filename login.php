@@ -8,34 +8,26 @@ require_once('_head.php');
 <?php
 //convoca al header
 require_once('_header.php');
-//si hay sesion iniciada, e intentar acceder a la pagina de login, este redirecciona al perfil del usuario
+//si hay sesion iniciada, e intentan acceder a la pagina de login, este redirecciona al perfil del usuario
 if ($session->status()) { 
-  header('location: userProfile.php');
-    exit();
+  redirect('userProfile.php');
 }
 if ($_POST) {
-          
-          
-            
+
   $buscaEmail =  $db->traerUsuario($_POST['email']);
   $buscaPassword = $db->searchPassword($_POST['password'], $buscaEmail);
+  //se validan los datos, si hay errores, los guarda en un array $errores 
+
   $errores = Validation::validationLogin($buscaEmail,$buscaPassword);
-  //se envian los datos recibidos por POST a la funcion encargada de validar los datos
   
-
-
-// si no hay errores, se guarda el usuario en un array
   if (!$errores) 
   {
-
-      $usuarioLogin = $db->usuarioLogin($_POST['email']);      
-
-      //funcion que se encarga de iniciar sesion y de mantenerla abierta si el usuario tildo la opcion de recordar, para ello, se le pasa el array que devuelve la funcion loginUser
-      $session->rememberSession($usuarioLogin);
-      
-      //por ultimo, la pagina del login, redirecciona al perfil
-      header('Location: userProfile.php'); 
-      exit();
+    //si no hay errores, se mantiene la sesion o se setea el cookie dependiendo
+    //si el usuario tildo la opcion de recordar 
+    $usuarioLogin = $db->usuarioLogin($_POST['email']);    
+    $session->rememberSession($usuarioLogin);
+    
+    redirecciona('userProfile.php');
       
   }
       

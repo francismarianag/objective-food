@@ -226,26 +226,6 @@ textarea#mensaje {
 
 /*
 
-//////////// PROFILE //////////
-
-*/
-
-.container-profile {
-  width: 80%;
-  display: flex;
-  margin: 0 auto;
-}
-
-.data-profile{
-  width: 30%;
-}
-
-.foto-profile{
-  width: 30%;
-
-}
-/*
-
 //////////// RESPONSIVE //////////
 
 */

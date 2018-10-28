@@ -7,7 +7,9 @@ class Json extends DataBase
     public function __construct($archivo){
         $this->archivo=$archivo;
     }
-    //retorna el email si el usuario existe en la base de datos
+    //+ la funcion traer usuario recibe un parametro email que en realidad va a ser la 
+    //+ cada usuario. Si el email recibido por post concuerda con un email del archivo json quiere decir
+    //+ que el usuario ya existía entonces deja de ser null y retorna el email
     public function traerUsuario($email){
         $usuarios = $this->traerUsuarios();
 
@@ -16,6 +18,8 @@ class Json extends DataBase
             
 
             if ( $emailJson == $email) {
+                
+                // return new Usuario($usuario['nombre'], $usuario['apellido'], $usuario['email'], $usuario['password'], $usuario['fotoPerfil']);    
                 return $email;
             } 
         }
@@ -23,7 +27,7 @@ class Json extends DataBase
     
     }
 
-    //devuelve un objeto Usuario con los datos guardados
+    //devuelve un objeto Usuario con los datos guarddos
     public function usuarioLogin($email){
         $usuarios = $this->traerUsuarios();
 
@@ -121,41 +125,11 @@ class Json extends DataBase
                     $emailJson = $usuario->email;
                     if ($emailJson == $email) {
                         foreach ($_POST as $key => $value) {
-                            if ($key == 'password' && $value != $usuario->password) {
+                            if ($key == 'password' && $value != "") {
                                 $usuario->password = password_hash($value, PASSWORD_DEFAULT);
-                            } elseif ($key != 'submit')  {
+                            } elseif ($key != 'submit') {
                                 $usuario->$key = $value;
-                            }                            
-                        }
-                        
-                    }
-                    //ejecutar el break para que salga del bucle, de lo contrario, el $usuarioActualizado sera igual al ultimo usuario ingresado
-                    break;
-                }
-            
-                $json = json_encode($usuarios);
-                
-                file_put_contents($this->archivo, $json);
-                $usuarioActualizado = new Usuario($usuario->nombre, $usuario->apellido, $usuario->email, $usuario->password);
-
-                return $usuarioActualizado;
-                
-            }
-
-            public function eliminarUsuario($email){  
-                $usuarios = $this->traerUsuarios();
-                
-                foreach ($usuarios->usuarios as $usuario) {
-                    $emailJson = $usuario->email;
-                    if ($emailJson == $email) {
-                        foreach ($_POST as $key => $value) {
-                            //if ($key == 'password' && $value != "") {
-                            //     // $usuario->password = password_hash($value, PASSWORD_DEFAULT);
-                            //     $usuario->password  = $value;
-                            // } elseif ($key != 'submit') {
-                            if ($key != 'eliminar') {
-                                $usuario->$key = $value;
-                             }
+                            }
                         }
                         
                         break;
@@ -164,8 +138,8 @@ class Json extends DataBase
             
                 $json = json_encode($usuarios);
                 
-                var_dump($json);
-                exit;
+                // var_dump($json);
+                // exit;
                 
                 file_put_contents($this->archivo, $json);
                 return new Usuario($usuario->nombre, $usuario->apellido, $usuario->email, $usuario->password);

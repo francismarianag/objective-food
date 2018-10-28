@@ -116,20 +116,20 @@ footer>section>article>ul{
 }
 
 .profile-content article img{
-  max-width:100px;
+  max-width:100%;
   height:auto;
 }
 
 .profile-content article{
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
 }
 
 .profile-content article form{
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
 }
 
 /*Terminan Estilos de perfil.php*/
@@ -164,9 +164,8 @@ footer>section>article>ul{
   }
 
   .profile-content{
-    margin: 100px;
+    margin: 5% auto;
     display: flex;
-    align-items: center;
   }
 
   .profile-content article{

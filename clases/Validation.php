@@ -108,25 +108,26 @@ abstract class Validation
         switch ($dato) {
             
             case 'email':
-                $error = "Debes ingresar tu email para poder iniciar sesión";
+                $error = "Debes ingresar tu email para poder reestablecer contraseña";
                 return $error;
                 break;
             case 'email-invalidates':
                 $error = "La dirección de E-mail ingresada no es válida!";
                 return $error;
                 break; 
-            case 'password':
-                $error = "Debes ingresar una contraseña";
-                return $error;
-                break;
-            case 'passwordLength':
-                $error = "La contraseña debe tener un minimo de 8 caracteres!";
-                return $error;
-                break;
-            case 'passwordlower':
-                $error = "La contraseña debe tener una letra mayuscula!";
-                return $error;
-                break;
+            //para el futuro  
+            // case 'password':
+            //     $error = "Debes ingresar una contraseña";
+            //     return $error;
+            //     break;
+            // case 'passwordLength':
+            //     $error = "La contraseña debe tener un minimo de 8 caracteres!";
+            //     return $error;
+            //     break;
+            // case 'passwordlower':
+            //     $error = "La contraseña debe tener una letra mayuscula!";
+            //     return $error;
+            //     break;
         }
     
     }
@@ -146,19 +147,19 @@ abstract class Validation
         
             }
         
-            if (isset($_POST['password'])) {               
-                $password = ($_POST['password']);
+            // if (isset($_POST['password'])) {               
+            //     $password = ($_POST['password']);
         
-                if (empty($password)) {            
-                   $error['password'] = self::recoverError('password');
-                } elseif (strlen($_POST['password'])<8) {
-                    $error['password'] = self::recoverError('passwordLength');
-                } elseif ($_POST['password'] === strtolower($_POST['password'])) {// si son iguales es porque no hay mayuscula y muestra error
-                    $error['password'] = self::recoverError('passwordlower');
+            //     if (empty($password)) {            
+            //        $error['password'] = self::recoverError('password');
+            //     } elseif (strlen($_POST['password'])<8) {
+            //         $error['password'] = self::recoverError('passwordLength');
+            //     } elseif ($_POST['password'] === strtolower($_POST['password'])) {// si son iguales es porque no hay mayuscula y muestra error
+            //         $error['password'] = self::recoverError('passwordlower');
                 
-                }
+            //     }
         
-            }
+            // }
            
         
             return $error;

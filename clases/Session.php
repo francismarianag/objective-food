@@ -25,7 +25,7 @@ class Session
         
     }
     
-    //Es implementada en el login para iniciar sesion y mantenerla si el usuario tildo la opcion de recordar
+    //Es implementada en el login para iniciar sesion y mantenerla si el usuario tildo la opcion de recordar, de lo contrario, se setea el cookie
     public function rememberSession($usuarioLogin)
     {
         $_SESSION['usuario'] = $usuarioLogin;

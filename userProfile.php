@@ -21,7 +21,6 @@ if ($_FILES){
 }
 
 if (($_POST)) {
-
   $errores=Validation::validarErrores();
   $usuarioBD=$db->traerUsuario($_POST['email']);
   $usuarioActual = user()->getEmail();
@@ -29,7 +28,6 @@ if (($_POST)) {
     if ($usuarioBD == $usuarioActual || $usuarioBD== null) { 
       // var_dump($
       $usuarioActualizado = $db->modificarBD(user()->getEmail());
-   
       session_destroy();
       session_start();  
       $_SESSION['usuario'] = $usuarioActualizado;
@@ -55,7 +53,7 @@ require_once('_header.php');
 ?>
 <body>
 
-    <section class="container-profile">
+    <section class="profile-content">
       <!-- <nav class="nav-perfil">
         <ul>
           <a href=""><li>Cuenta</li></a>
@@ -100,6 +98,7 @@ require_once('_header.php');
               <span class="error-container"><i class="fas fa-exclamation-circle"></i><?php echo $errores['passwordlower']; ?></span>
             <?php endif ?>
             <button type ="submit" name="submit">Actualizar</button>
+
           </form>
         </article>
 

@@ -5,10 +5,18 @@ require_once('autoloader.php');
 $session = new Session();
 $db = new Json('usuarios.json');
 
-function redirect(){
-    header('location: userProfile.php');
+//redirecciona de la pagina actual a la pagina pasada como parametro
+function redirect($pagina){
+    header("location: $pagina");
     exit();
 }
+//ayuda a debuguear
+function dd(...$param)
+{
+    echo "<pre>";
+    die(var_dump($param));
+}
+
 function old($name){
         echo $_POST[$name];
 }
