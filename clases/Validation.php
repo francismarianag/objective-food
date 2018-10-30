@@ -60,9 +60,8 @@ abstract class Validation
         }
 
     }
+    //si hay errores, retorna un array de errores
     public static function validarErrores(){
-        //+ la variable $errores es un array asociativo que empieza vacio, a medida que aparecen errores
-        //+ este va a ir acumulandolos en sus respectivas posiciones.
         $errores=[];
         
         if (isset($_POST['nombre'])) {
@@ -100,7 +99,7 @@ abstract class Validation
             $errores['emptyTyc']='Debes aceptar los términos y condiciones para poder registrarte!';
         }
         
-        return $errores;
+        return $errores; 
     }
 
     public static function recoverError($dato){

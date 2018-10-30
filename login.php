@@ -27,7 +27,7 @@ if ($_POST) {
     $usuarioLogin = $db->usuarioLogin($_POST['email']);    
     $session->rememberSession($usuarioLogin);
     
-    redirecciona('userProfile.php');
+    redirect('userProfile.php');
       
   }
       

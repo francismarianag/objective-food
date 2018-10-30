@@ -1,29 +1,15 @@
 <?php 
 abstract class DataBase
 {
-    
-    
-    //+ la funcion traer usuario recibe un parametro email que en realidad va a ser la variable 
-    //+ $_POST['email]. Al recibir el email, primero declara al usuario como null( osea no existe).
-    //+ luego, hace un fopen del archivo 'usuarios.txt' y lo recorre linea por linea decodificando
-    //+ cada usuario. Si el email recibido por post concuerda con un email del archivo json quiere decir
-    //+ que el usuario ya existía entonces deja de ser null. Cierra el archivo y retorna $usuario.
-    abstract public function traerUsuario($email);
-    
-    //+ la funcion guardarUsuario recibe como parametro un usuario, hace un json_encode de este y luego
-    //+ lo guarda en el archivo usuarios.json.
-    
+    abstract public function traerUsuario($email);    
     abstract public function guardarUsuario($usuario);
-    
-    //Verifica contraseña en el archivo json. Esta funcion es usada en el login para verificar si el password introducido coincide con el guardado en el registro 
     abstract public function searchPassword($password, $email);
-
     abstract public function modificarBD($email);
 
     public function guardarFoto($fotoPerfil)
     {
 
-    // Ponemos el nombre original de la foto en una variable.
+    // nombre original de la foto en una variable.
     $nombre = $fotoPerfil["name"];
 
     // Ponemos el nombre nuevo en otra variable (el que php pone en la carpeta /tmp).
@@ -47,7 +33,7 @@ abstract class DataBase
     return $nombreFinal;
     }
     
-public function validarFoto ($foto)
+    public function validarFoto ($foto)
     {
         if ($foto["error"] !== UPLOAD_ERR_OK) {
             return false; 
@@ -55,7 +41,7 @@ public function validarFoto ($foto)
         return true;
     }
 
-public function validarFotoPerfil($usuario)
+    public function validarFotoPerfil($usuario)
     {
         $filesErrores = [];
 
