@@ -59,7 +59,7 @@ class Json extends DataBase
         file_put_contents($this->archivo, $json);
     }
     
-    //retorna todos los usuarios en el json
+    //retorna un array con los usuarios del json
     public function traerUsuarios()
     {
         $archivo = file_get_contents($this->archivo);

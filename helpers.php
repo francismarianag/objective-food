@@ -3,7 +3,13 @@ require_once('autoloader.php');
 
 
 $session = new Session();
-$db = new Json('usuarios.json');
+/* Trabaja con el JSON como base de datos */
+ $db = new Json('usuarios.json');
+
+/* Trabaja con MySql como base de datos */
+//se invoca el metodo estatico para realizar la conexion
+// $conexion = ConexionDB::conexion();
+// $db = new Mysql($conexion);
 
 //redirecciona de la pagina actual a la pagina pasada como parametro
 function redirect($pagina){
@@ -22,21 +28,21 @@ function old($name){
 }
 
 // Nos devuelve true en caso de que estemos logueados, false en caso de que no lo estemos.
-function check()
-{
-    return isset($_SESSION['usuario']);
-}
+// function check()
+// {
+//     return isset($_SESSION['usuario']);
+// }
 
 // Nos devuelve false en caso de que estemos logueados, true en caso de que no lo estemos.
-function guest()
-{
-    return !check();
-}
+// function guest()
+// {
+//     return !check();
+// }
 
-// Nos devuelve el usuario en el caso de que estemos logueados, false en el caso de que no.
+// Nos devuelve el usuario en el caso de que estemos logueados, false si no.
 function user()
 {
-    if (check()) {
+    if (isset($_SESSION['usuario'])) {
         return $_SESSION['usuario'];
     } else {
         return false;

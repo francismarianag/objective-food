@@ -57,10 +57,10 @@ require_once('_header.php');
       <article class="foto-profile">
         <img src="<?= $usuario; ?>" alt="">
         <form class="file-form contact-form"action="" method="post" enctype="multipart/form-data">
-        <label for="file">Foto de Perfil</label>
-        <input type="file" name="subirFotoPerfil">
-        <?= (isset($filesErrores)) ? $filesErrores['fotoPerfil'] : "" ?>
-        <input type ="submit" name="submit" value="Subir foto">
+          <label for="file">Foto de Perfil</label>
+          <input type="file" name="subirFotoPerfil">
+          <?= (isset($filesErrores)) ? $filesErrores['fotoPerfil'] : "" ?>
+          <input type ="submit" name="submit" value="Subir foto">
       </form>
     </article>
     <!-- edicion y visualizacion de los datos del perfil -->
@@ -69,24 +69,33 @@ require_once('_header.php');
           <form class="contact-form" method="post">
             <label for="nombre">Nombre:</label>
             <input  class="form-input" name ="nombre" type="text" value="<?= user()->getNombre();?>">
+            
             <label for="apellido">Apellido:</label>
             <input  class="form-input" name="apellido" type="text" value="<?= user()->getApellido();?>">
+
             <label for="email">Email:</label>
             <input  class="form-input" name="email" type="email" value="<?= user()->getEmail();?>">
+
             <?php if (isset($errores['invalidEmail'])):?>
-              <span class="error-container"><i class="fas fa-exclamation-circle"></i><?php echo $errores['invalidEmail']; ?></span>
+              <span class="error-container"><i class="fas fa-exclamation-circle"></i>
+              <?php echo $errores['invalidEmail']; ?></span>
                                                 
             <?php elseif (isset($errores['usuarioExiste'])):?>
-              <span class="error-container"><i class="fas fa-exclamation-circle"></i><?php echo $errores['usuarioExiste']; ?></span>
+              <span class="error-container"><i class="fas fa-exclamation-circle"></i>
+              <?php echo $errores['usuarioExiste']; ?></span>
             <?php endif ?>
+
             <label for="email">Contraseña:</label>
             <input  class="form-input" name="password" type="password" value="<?= user()->getContrasenia();?>">
-            
+
             <?php if (isset($errores['passwordLength'])):?>
-              <span class="error-container"><i class="fas fa-exclamation-circle"></i><?php echo $errores['passwordLength']; ?></span>
+              <span class="error-container"><i class="fas fa-exclamation-circle"></i>
+              <?php echo $errores['passwordLength']; ?></span>
             <?php elseif (isset($errores['passwordlower'])):?>
-              <span class="error-container"><i class="fas fa-exclamation-circle"></i><?php echo $errores['passwordlower']; ?></span>
+              <span class="error-container"><i class="fas fa-exclamation-circle"></i>
+              <?php echo $errores['passwordlower']; ?></span>
             <?php endif ?>
+
             <input type ="submit" name="submit" value="Actualizar">
             <input type ="submit" name="delete" value="Eliminar usuario">
 
