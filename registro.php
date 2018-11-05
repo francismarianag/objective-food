@@ -14,7 +14,8 @@ if ($_POST) {
     
    $errores=Validation::validarErrores();
    //si el email ingresado no existe, $usuarioViejo sera null
-   $usuarioViejo=$db->traerUsuario($_POST['email']);
+    $usuarioViejo=$db->traerUsuario($_POST['email']);
+//    $usuarioViejo=null; //para realizar prueba
 
    if ($usuarioViejo==null) { 
    //si no hay errores y se tildo los terminos y condiciones instancio un nuevo usuario
@@ -33,11 +34,10 @@ if ($_POST) {
         $errores['usuarioExiste']='Este email ya pertenece a una cuenta registrada!';
     }
 }
-
-
 ?>
-
+<?php //Por mejorar: Realizar una confirmacion de contraseña  ?>
 <?php require_once('_header.php'); ?>
+
 <main class="signin-back">
         <section class="back-blur">
                 <article class="signin container">

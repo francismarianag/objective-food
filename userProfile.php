@@ -14,7 +14,7 @@ if ($_FILES){
   
 }
 //si se presiona eliminar, elimina de la bd y redirecciona al home.
-//tomar en cuenta a futuro una advertencia y/o confirmacion de eliminacion del usuario
+//Por mejorar: tomar en cuenta a futuro una advertencia y/o confirmacion de eliminacion del usuario
 if ($_POST['delete']) {
   $db->eliminarBD(user()->getEmail());
   session_destroy();
@@ -24,11 +24,12 @@ if ($_POST['delete']) {
 if (($_POST['submit'])) {
    $errores=Validation::validarErrores();
   $usuarioBD=$db->traerUsuario($_POST['email']);
+  
   $usuarioActual = user()->getEmail();
   if (count($errores) == 1 ) {  //count va hacer siempre uno por el $errores['emptyTyc'], indicaria que solo ese error contiene.
     if ($usuarioBD == $usuarioActual || $usuarioBD== null) { 
-      // var_dump($
-      $usuarioActualizado = $db->modificarBD(user()->getEmail());
+      $usuarioActualizado = $db->modificarBD($_POST);
+      // dd($usuarioActualizado);
       session_destroy();
       session_start();  
       $_SESSION['usuario'] = $usuarioActualizado;
@@ -41,13 +42,11 @@ if (($_POST['submit'])) {
  
 }
 $usuario = user()->getFotoPerfil();
-
  $usuario = $db->searchImg(user()->getEmail());
 ?>
 <title>Perfil | Objective Food</title>
   </head>
 <?php
-//convoca al header
 require_once('_header.php');
 ?>
 <body>
@@ -60,7 +59,7 @@ require_once('_header.php');
           <label for="file">Foto de Perfil</label>
           <input type="file" name="subirFotoPerfil">
           <?= (isset($filesErrores)) ? $filesErrores['fotoPerfil'] : "" ?>
-          <input type ="submit" name="submit" value="Subir foto">
+          <input type ="submit" name="upload" value="Subir foto">
       </form>
     </article>
     <!-- edicion y visualizacion de los datos del perfil -->

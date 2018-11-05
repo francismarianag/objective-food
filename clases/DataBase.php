@@ -1,7 +1,7 @@
 <?php 
 abstract class DataBase
 {
-    abstract public function traerUsuario($email);   
+    // abstract public function traerUsuario($email);   
     abstract public function usuarioLogin($email);
     abstract public function guardarUsuario($usuario);
     abstract public function searchPassword($password, $email);

@@ -17,7 +17,7 @@ if ($_POST) {
   $buscaEmail =  $db->traerUsuario($_POST['email']);
   $buscaPassword = $db->searchPassword($_POST['password'], $buscaEmail);
   //se validan los datos, si hay errores, los guarda en un array $errores 
-
+  
   $errores = Validation::validationLogin($buscaEmail,$buscaPassword);
   
   if (!$errores) 
