@@ -4,12 +4,12 @@ require_once('autoloader.php');
 
 $session = new Session();
 /* Trabaja con el JSON como base de datos */
-$db = new Json('usuarios.json');
+//$db = new Json('usuarios.json');
 
 /* Trabaja con MySql como base de datos */
 //se invoca el metodo estatico para realizar la conexion
-// $conexion = ConexionDB::conexion();
-// $db = new Mysql($conexion);
+$conexion = ConexionDB::conexion();
+$db = new Mysql($conexion);
 
 //redirecciona de la pagina actual a la pagina pasada como parametro
 function redirect($pagina){

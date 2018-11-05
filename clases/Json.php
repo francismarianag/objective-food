@@ -111,7 +111,7 @@ class Json extends DataBase
         
         foreach ($usuarios->usuarios as $usuario) {
             $emailJson = $usuario->email;
-            if ($emailJson == $post['email']) {
+            if ($emailJson == user()->getEmail()) {
                 foreach ($_POST as $key => $value) {
                     if ($key == 'password' && $value != $usuario->password) {
                         $usuario->password = password_hash($value, PASSWORD_DEFAULT);
@@ -124,12 +124,10 @@ class Json extends DataBase
                 break;
             }
         }
-    
+        
         $json = json_encode($usuarios);
         file_put_contents($this->archivo, $json);
         $usuarioActualizado = new Usuario($usuario->nombre, $usuario->apellido, $usuario->email, $usuario->password);
-        // dd($usuarioActualizado);
-
         return $usuarioActualizado;
         
     }

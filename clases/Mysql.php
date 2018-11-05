@@ -67,20 +67,22 @@ class Mysql extends DataBase
     public function modificarBD($post)
     {
         
-        // $password = password_hash($post['password'], PASSWORD_DEFAULT);
         $emailActual = user()->getEmail();
+        $passwordActual = user()->getContrasenia();
+        if ($passwordActual != $post['password'] ) {
+            $password = password_hash($post['password'], PASSWORD_DEFAULT);
+        } else {
+            $password = $post['password'];
+        }
 
-
-        // $usuarioNuevo->setContrasenia($hashedPassword);
         $stmt = $this->db->prepare("UPDATE usuarios SET nombre = :nombre, apellido = :apellido, email = :email, password = :password WHERE email = '$emailActual'");
         
         $stmt->bindParam(":nombre",  $post['nombre']);
         $stmt->bindParam(":apellido",  $post['apellido']);
         $stmt->bindParam(":email",  $post['email']);
-        $stmt->bindParam(":password",  $post['password']);
+        $stmt->bindParam(":password",  $password);
         $stmt->execute();
         $usuario = $this->usuarioLogin($post['email']);
-        dd($usuario);
         return new Usuario($usuario->nombre, $usuario->apellido, $usuario->email, $usuario->contrasenia);
     }
 

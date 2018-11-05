@@ -24,24 +24,25 @@ if ($_POST['delete']) {
 if (($_POST['submit'])) {
    $errores=Validation::validarErrores();
   $usuarioBD=$db->traerUsuario($_POST['email']);
-  
   $usuarioActual = user()->getEmail();
   if (count($errores) == 1 ) {  //count va hacer siempre uno por el $errores['emptyTyc'], indicaria que solo ese error contiene.
     if ($usuarioBD == $usuarioActual || $usuarioBD== null) { 
       $usuarioActualizado = $db->modificarBD($_POST);
+      // $usuarioActualizado->fotoPerfil = $db->getFotoPerfil();
       // dd($usuarioActualizado);
       session_destroy();
       session_start();  
-      $_SESSION['usuario'] = $usuarioActualizado;
+      // dd($usuarioActualizado);
+       $_SESSION['usuario'] = $usuarioActualizado;
       
      }else {
-       $errores['usuarioExiste']='Este email ya pertenece a una cuenta registrada!';
-    }
+      $errores['usuarioExiste']='Este email ya pertenece a una cuenta registrada!';
+   }
   }
 
  
 }
-$usuario = user()->getFotoPerfil();
+// $usuario = user()->getFotoPerfil();
  $usuario = $db->searchImg(user()->getEmail());
 ?>
 <title>Perfil | Objective Food</title>
