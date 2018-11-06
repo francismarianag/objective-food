@@ -55,7 +55,7 @@ require_once('helpers.php');
         <li><a href="login.php"><i class="fas fa-sign-in-alt"></i>Ingresar</a></li>
         <li><a href="registro.php"><i class="fas fa-user-plus"></i>Registrarme</a></li>
       <?php } else { ?>
-        <li><a href="userProfile.php"><i class="fas fa-user-cog"></i><?= $session->status() ? user()->getNombre() : ""; ?></a></li>
+        <li><a href="userProfile.php"><i class="fas fa-user-cog"></i><?= $session->status() ? ucfirst(user()->getNombre()) : ""; ?></a></li>
         <li><a href="logout.php"><i class="fas fa-user-times"></i>Salir</a></li>
       <?php } ?>
       </ul>

@@ -226,6 +226,53 @@ textarea#mensaje {
 
 /*
 
+//////////// Perfil //////////
+
+*/
+
+section.profile-content {
+  margin: 5%;
+  display: grid;
+  grid-row-gap: 5%;
+}
+
+article.foto-profile {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+article.foto-profile h3 {
+  text-align: center;
+  margin: 0.5em;
+}
+
+article.foto-profile .form-button{
+  margin-bottom: 1%;
+}
+
+article.foto-profile .contact-form {
+  justify-self: center;
+}
+
+article.data-profile .form-button {
+  margin-bottom: 1em;
+  margin-top: 0.2em;
+}
+
+article.foto-profile img {
+  width: 80%;
+  margin: auto;
+}
+
+input[type="file"] {
+  margin: auto;
+}
+
+article.data-profile {
+  margin-bottom: 5%;
+}
+/*
+
 //////////// RESPONSIVE //////////
 
 */
@@ -257,7 +304,14 @@ textarea#mensaje {
   }
   .contact-header h2 {
     top: 0;
+  }
+ 
 }
+
+@media (min-width: 768px){
+  section.profile-content {
+    margin: 5% 30%;
+  }  
 }
 
 

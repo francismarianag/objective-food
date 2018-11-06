@@ -131,33 +131,7 @@ class Json extends DataBase
         return $usuarioActualizado;
         
     }
-            // public function modificarBD($email){  
-            //     $usuarios = $this->traerUsuarios();
-                
-            //     foreach ($usuarios->usuarios as $usuario) {
-            //         $emailJson = $usuario->email;
-            //         if ($emailJson == $email) {
-            //             foreach ($_POST as $key => $value) {
-            //                 if ($key == 'password' && $value != $usuario->password) {
-            //                     $usuario->password = password_hash($value, PASSWORD_DEFAULT);
-            //                 } elseif ($key != 'submit')  {
-            //                     $usuario->$key = $value;
-            //                 }                            
-            //             }
-                        
-            //             //ejecutar el break para que salga del bucle, de lo contrario, el $usuarioActualizado sera igual al ultimo usuario ingresado
-            //             break;
-            //         }
-            //     }
-            
-            //     $json = json_encode($usuarios);
-            //     file_put_contents($this->archivo, $json);
-            //     $usuarioActualizado = new Usuario($usuario->nombre, $usuario->apellido, $usuario->email, $usuario->password);
-            //     // dd($usuarioActualizado);
-
-            //     return $usuarioActualizado;
-                
-            // }
+    
 //eliminar usuario json. Lo que hace es reescribir el archivo json a traves 
 //de la variable $user
             

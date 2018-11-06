@@ -74,7 +74,7 @@ footer>section>article>ul{
 
 /*Empizan Estilos de perfil.php*/
 
-.nav-perfil{
+/* .nav-perfil{
   background-color: #d4d4d4;
   height: 400px;
   display: flex;
@@ -101,36 +101,36 @@ footer>section>article>ul{
   text-decoration: none;
   color: white;
   width:100%;
-}
+} */
 
-.profile-content{
+/* .profile-content{
   margin: 30px;
-}
-.file-form {
+} */
+/* .file-form {
   margin: 1em 0;
 }
 .file img {
   width: 100%;
   margin-top: 0.5em;
   border-radius: 10px;
-}
+} */
 
-.profile-content article img{
+/* .profile-content article img{
   max-width:100%;
   height:auto;
-}
+} */
 
-.profile-content article{
-  /* display: flex;
+/* .profile-content article{
+  display: flex;
   flex-direction: column;
-  align-items: center; */
-}
+  align-items: center; 
+}*/
 
-.profile-content article form{
-  /* display: flex;
+/* .profile-content article form{
+   display: flex;
   flex-direction: column;
-  align-items: center; */
-}
+  align-items: center; 
+}*/
 
 /*Terminan Estilos de perfil.php*/
 
@@ -145,8 +145,8 @@ footer>section>article>ul{
     justify-content: center;
     align-items: center;
   }
-  /*Empizan Estilos de perfil.php*/
-  .profile{
+  /*Perfil*/
+  /* .profile{
     display: flex;
   }
   #side-navbar{
@@ -172,7 +172,7 @@ footer>section>article>ul{
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+  } */
   /*Terminan Estilos de perfil.php*/
 }
 

@@ -10,16 +10,15 @@ abstract class DataBase
     public function guardarFoto($fotoPerfil)
     {
 
-    // nombre original de la foto en una variable.
+    // nombre original
     $nombre = $fotoPerfil["name"];
-
-    // Ponemos el nombre nuevo en otra variable (el que php pone en la carpeta /tmp).
+    //nombre nuevo
     $archivo = $fotoPerfil["tmp_name"];
 
-    // Ponemos la extensión del archivo en una variable.
+    //extension del archivo
     $ext = pathinfo($nombre, PATHINFO_EXTENSION);
 
-    // Generamos el nuevo nombre de la imagen usando un id único con la función uniqid
+    //nuevo nombre de la imagen usando un id unico
     $nombreFinal = uniqid() . "." . $ext;
 
     // Generamos el nuevo path completo de la imagen, usando realpath para permitirnos volver una carpeta hacia atrás.

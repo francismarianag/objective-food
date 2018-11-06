@@ -1,17 +1,16 @@
 <?php 
 class Mysql extends DataBase 
 {
-    //este atributo contiene la conexion con la base de datos
+    //conexion con la base de datos
     public $db; 
     
     public function __construct($db){
         $this->db=$db;
     }
-    //retorna el email si el usuario existe en la base de datos
+    //retorna el email si el usuario existe
     public function traerUsuario($email){
         $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE email = '$email'"); 
         $stmt->execute();
-        //extraigo los datos con fectchall y lo almaceno en $result
         $usuario= $stmt->fetch(PDO::FETCH_ASSOC);
         return $usuario['email'];
     }    
@@ -21,7 +20,6 @@ class Mysql extends DataBase
     {
         $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE email = '$email'"); 
         $stmt->execute();
-        //extraigo los datos con fectchall y lo almaceno en $result
         $usuario= $stmt->fetch(PDO::FETCH_ASSOC);
         
         return new Usuario($usuario['nombre'], $usuario['apellido'], $usuario['email'], $usuario['password'], $usuario['foto']);
@@ -47,11 +45,10 @@ class Mysql extends DataBase
     {
         $stmt = $this->db->prepare("SELECT foto FROM usuarios WHERE email = '$email'"); 
         $stmt->execute();
-        //extraigo los datos con fectchall y lo almaceno en $result
         $usuario= $stmt->fetch(PDO::FETCH_ASSOC);
         return $usuario['foto'];
     }
-    //Verifica contraseña en el archivo json. Esta funcion es usada en el login para verificar si el password introducido coincide con el guardado en el registro 
+    //Verifica contraseña  
     public function searchPassword($password, $email){
 
         $stmt = $this->db->prepare("SELECT password FROM usuarios WHERE email = '$email'"); 
@@ -64,6 +61,7 @@ class Mysql extends DataBase
                         return false;
                     }
     }
+
     public function modificarBD($post)
     {
         
@@ -84,8 +82,9 @@ class Mysql extends DataBase
         $stmt->execute();
         $usuario = $this->usuarioLogin($post['email']);
         return new Usuario($usuario->nombre, $usuario->apellido, $usuario->email, $usuario->contrasenia);
-    }
 
+    }
+    //elimina de la base de datos. {{ Considerar una confirmacion previa }}
     public function eliminarBD($email)
     {
         $stmt = $this->db->prepare("DELETE FROM usuarios WHERE email = '$email'"); 
@@ -98,9 +97,8 @@ class Mysql extends DataBase
         $stmt = $this->db->prepare("UPDATE usuarios SET foto = :foto WHERE email = '$email'");
         $stmt->bindParam(":foto",  $nuevaFoto);
         $stmt->execute();
-      
 
     }
 
 }
-            ?>
+?>

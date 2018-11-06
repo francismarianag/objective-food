@@ -55,17 +55,19 @@ require_once('_header.php');
     <section class="profile-content">
     <!-- edicion y visualizacion de la foto de perfil -->
       <article class="foto-profile">
-        <img src="<?= $usuario; ?>" alt="">
         <form class="file-form contact-form"action="" method="post" enctype="multipart/form-data">
-          <label for="file">Foto de Perfil</label>
+        <img src="<?= $usuario; ?>" alt="">
+          <!-- <label for="file">Foto de Perfil</label> -->
+        <h3>Hola <?= ucfirst(user()->getNombre());?></h3>
+
           <input type="file" name="subirFotoPerfil">
           <?= (isset($filesErrores)) ? $filesErrores['fotoPerfil'] : "" ?>
-          <input type ="submit" name="upload" value="Subir foto">
+          <input type ="submit" name="upload" value="Subir foto" class="form-row form-button">
       </form>
     </article>
     <!-- edicion y visualizacion de los datos del perfil -->
     <article class="data-profile">
-        <h3>Hola <?= user()->getNombre();?></h3>
+        <!-- <h3>Hola <?= ucfirst(user()->getNombre());?></h3> -->
           <form class="contact-form" method="post">
             <label for="nombre">Nombre:</label>
             <input  class="form-input" name ="nombre" type="text" value="<?= user()->getNombre();?>">
@@ -96,8 +98,8 @@ require_once('_header.php');
               <?php echo $errores['passwordlower']; ?></span>
             <?php endif ?>
 
-            <input type ="submit" name="submit" value="Actualizar">
-            <input type ="submit" name="delete" value="Eliminar usuario">
+            <input type ="submit" name="submit" value="Actualizar" class="form-row form-button">
+            <input type ="submit" name="delete" value="Eliminar usuario" class="form-row form-button">
 
           </form>
         </article>
