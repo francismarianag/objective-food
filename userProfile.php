@@ -14,7 +14,7 @@ if ($_FILES){
   
 }
 //si se presiona eliminar, elimina de la bd y redirecciona al home.
-//Por mejorar: tomar en cuenta a futuro una advertencia y/o confirmacion de eliminacion del usuario
+//{{ Por mejorar: tomar en cuenta a futuro una advertencia y/o confirmacion de eliminacion del usuario }}
 if ($_POST['delete']) {
   $db->eliminarBD(user()->getEmail());
   session_destroy();
@@ -28,11 +28,8 @@ if (($_POST['submit'])) {
   if (count($errores) == 1 ) {  //count va hacer siempre uno por el $errores['emptyTyc'], indicaria que solo ese error contiene.
     if ($usuarioBD == $usuarioActual || $usuarioBD== null) { 
       $usuarioActualizado = $db->modificarBD($_POST);
-      // $usuarioActualizado->fotoPerfil = $db->getFotoPerfil();
-      // dd($usuarioActualizado);
       session_destroy();
       session_start();  
-      // dd($usuarioActualizado);
        $_SESSION['usuario'] = $usuarioActualizado;
       
      }else {
@@ -43,7 +40,7 @@ if (($_POST['submit'])) {
  
 }
 // $usuario = user()->getFotoPerfil();
- $usuario = $db->searchImg(user()->getEmail());
+ $fotoPerfil = $db->searchImg(user()->getEmail());
 ?>
 <title>Perfil | Objective Food</title>
   </head>
@@ -56,7 +53,7 @@ require_once('_header.php');
     <!-- edicion y visualizacion de la foto de perfil -->
       <article class="foto-profile">
         <form class="file-form contact-form"action="" method="post" enctype="multipart/form-data">
-        <img src="<?= $usuario; ?>" alt="">
+        <img src="<?= $fotoPerfil; ?>" alt="">
           <!-- <label for="file">Foto de Perfil</label> -->
         <h3>Hola <?= ucfirst(user()->getNombre());?></h3>
 

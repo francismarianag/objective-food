@@ -2,7 +2,7 @@
 class Mysql extends DataBase 
 {
     //conexion con la base de datos
-    public $db; 
+    private $db; 
     
     public function __construct($db){
         $this->db=$db;
@@ -48,20 +48,21 @@ class Mysql extends DataBase
         $usuario= $stmt->fetch(PDO::FETCH_ASSOC);
         return $usuario['foto'];
     }
-    //Verifica contraseña  
+    //Verifica contraseña y devuelve true si la verificacion lo es
     public function searchPassword($password, $email){
 
         $stmt = $this->db->prepare("SELECT password FROM usuarios WHERE email = '$email'"); 
         $stmt->execute();
-        //extraigo los datos con fectchall y lo almaceno en $result
         $usuario= $stmt->fetch(PDO::FETCH_ASSOC);
-        if (password_verify($password, $usuario['password'])) {  //devuelve true si la verificacion lo es
+        if (password_verify($password, $usuario['password'])) {  
                         return true;
                     } else {
                         return false;
                     }
     }
 
+    //modifica todos los datos del perfil
+    //{{ Tomar en cuenta a futuro una confirmacion del nuevo email introducido}}
     public function modificarBD($post)
     {
         
